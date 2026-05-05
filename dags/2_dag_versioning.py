@@ -3,10 +3,10 @@ from more_itertools import first
 
 
 @dag(
-    dag_id="first_dag",
+    dag_id="versioned_dag",
     schedule=None,
 )
-def first_dag():
+def versioned_dag():
     
     @task.python
     def first_task():
@@ -20,10 +20,15 @@ def first_dag():
     def third_task():
         print("This is the third task in the first DAG")    
 
+    @task.python
+    def version_task():
+        print("This is the version task in the first DAG")  
+
     first = first_task()
     second = second_task() 
     third = third_task()
+    version = version_task()
 
-    first >> second >> third
+    first >> second >> third >> version
 
-first_dag()
+versioned_dag()
